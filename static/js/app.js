@@ -31,7 +31,7 @@ function pieChart(data){
    type : 'pie'
  };
  let layout = {
-   title : "Pie Chart"
+   title :  "Pie Chart"
  }; 
 console.log(data)
 console.log(labels)
