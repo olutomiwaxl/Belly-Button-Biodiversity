@@ -19,39 +19,40 @@ function buildMetadata(sample) {
   })
 }
 
+function pieChart(data){
+  // @TODO: Build a Pie Chart
+ let labels = data.otu_ids.slice(0,10);
+ let values = data.sample_values.slice(0,10);
+ let hover = data.otu_labels.slice(0,10);
+ let trace = {
+   values : values,
+   labels : labels,
+   hovertext : hover,
+   type : 'pie'
+ };
+ let layout = {
+   title : "Pie Chart"
+ }; 
+console.log(data)
+console.log(labels)
+ var data1 = [trace];
+ Plotly.newPlot('pie', data1, layout, {responsive:true});
+}
 
-function buildCharts(sample) {
-   // @TODO: Use `d3.json` to fetch the sample data for the plots
-  d3.json(`/samples/${sample}`).then( data =>{
-     // @TODO: Build a Pie Chart
-    let labels = data.otu_ids.slice(0,10);
-    let values = data.sample_values.slice(0,10);
-    let hover = data.otu_labels.slice(0,10);
-    let trace = [{
-      values : values,
-      labels : labels,
-      hovertext : hover,
-      type : 'pie'
-    }];
-    let layout = {
-      title : "Pie Chart"
-    };
-
-    var data1 = [trace];
-    Plotly.newPlot('pie', data1, layout, {responsive:true});
-   // @TODO: Build a Bubble Chart using the sample data
+ // @TODO: Build a Bubble Chart using the sample data
+function bubblePlot(data){
   let x_axis = data.otu_ids;
   let y_axis = data.sample_values;
   let markersize = data.sample_values;
   let markercolors = data.otu_ids;
   let textvalues = data.otu_labels
 
-  let trace2 = [{
+  let trace2 = {
     x : x_axis,
     y : y_axis,
     mode : 'markers',
     type : 'scatter' 
-  }]
+  }
   let layout2 = {
     title : " Scatter Plot ",
     xaxis : {
@@ -62,11 +63,15 @@ function buildCharts(sample) {
     }
   }
   var data2 = [trace2]
-  Plotly.newPlot('bubble', data2, layout2, {responsive: true})
-  });   
-  console.log(values)
+  Plotly.newPlot('bubble', data2, layout2, {responsive: true});  
+} 
+function buildCharts(sample) {
+   // @TODO: Use `d3.json` to fetch the sample data for the plots
+  d3.json(`/samples/${sample}`).then( data =>{
+    pieChart(data);
+    bubblePlot(data); 
+}); 
 }
-
 function init() {
   // Grab a reference to the dropdown select element
   var selector = d3.select("#selDataset");
