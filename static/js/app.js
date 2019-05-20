@@ -1,29 +1,70 @@
+
 function buildMetadata(sample) {
-
-  // @TODO: Complete the following function that builds the metadata panel
-
-  // Use `d3.json` to fetch the metadata for a sample
-    // Use d3 to select the panel with id of `#sample-metadata`
-
-    // Use `.html("") to clear any existing metadata
-
-    // Use `Object.entries` to add each key and value pair to the panel
-    // Hint: Inside the loop, you will need to use d3 to append new
-    // tags for each key-value in the metadata.
-
-    // BONUS: Build the Gauge Chart
-    // buildGauge(data.WFREQ);
+ 
+// Use d3 to select the panel with id of `#sample-metadata`
+  var metadataSample = d3.select("#sample-metadata");
+  
+// Use `d3.json` to fetch the metadata for a sample
+  d3.json(`/metadata/${sample}`).then(data =>{
+    metadataSample.html('');
+    console.log(Object.entries(data));
+     // Use `Object.entries` to add each key and value pair to the panel
+    Object.entries(data).forEach(([key ,value]) =>{
+  // Hint: Inside the loop, you will need to use d3 to append new
+  // tags for each key-value in the metadata. 
+      metadataSample
+      .append('p').text(`${key} : ${value}`)
+      .append('hr')
+    });
+  })
 }
 
+
 function buildCharts(sample) {
+   // @TODO: Use `d3.json` to fetch the sample data for the plots
+  d3.json(`/samples/${sample}`).then( data =>{
+     // @TODO: Build a Pie Chart
+    let labels = data.otu_ids.slice(0,10);
+    let values = data.sample_values.slice(0,10);
+    let hover = data.otu_labels.slice(0,10);
+    let trace = [{
+      values : values,
+      labels : labels,
+      hovertext : hover,
+      type : 'pie'
+    }];
+    let layout = {
+      title : "Pie Chart"
+    };
 
-  // @TODO: Use `d3.json` to fetch the sample data for the plots
+    var data1 = [trace];
+    Plotly.newPlot('pie', data1, layout, {responsive:true});
+   // @TODO: Build a Bubble Chart using the sample data
+  let x_axis = data.otu_ids;
+  let y_axis = data.sample_values;
+  let markersize = data.sample_values;
+  let markercolors = data.otu_ids;
+  let textvalues = data.otu_labels
 
-    // @TODO: Build a Bubble Chart using the sample data
-
-    // @TODO: Build a Pie Chart
-    // HINT: You will need to use slice() to grab the top 10 sample_values,
-    // otu_ids, and labels (10 each).
+  let trace2 = [{
+    x : x_axis,
+    y : y_axis,
+    mode : 'markers',
+    type : 'scatter' 
+  }]
+  let layout2 = {
+    title : " Scatter Plot ",
+    xaxis : {
+      title : 'OTU IDs',
+    },
+    yaxis : {
+      title : 'Sample Values',
+    }
+  }
+  var data2 = [trace2]
+  Plotly.newPlot('bubble', data2, layout2, {responsive: true})
+  });   
+  console.log(values)
 }
 
 function init() {
