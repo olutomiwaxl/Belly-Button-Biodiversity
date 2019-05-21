@@ -45,13 +45,18 @@ function bubblePlot(data){
   let y_axis = data.sample_values;
   let markersize = data.sample_values;
   let markercolors = data.otu_ids;
-  let textvalues = data.otu_labels
+  let textvalues = data.otu_labels;
 
   let trace2 = {
     x : x_axis,
     y : y_axis,
     mode : 'markers',
-    type : 'scatter' 
+    type : 'scatter',
+    marker : {
+      size : markersize,
+      color : markercolors,
+    } 
+    text : textvalues
   }
   let layout2 = {
     title : " Scatter Plot ",
