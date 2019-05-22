@@ -11,4 +11,4 @@ Stack Overflow: helped plot scatter plots (https://stackoverflow.com/questions/5
 
 
 
-Farhad Omidvar Github ==> Got styling ideas for my plots and html page (https://github.com/farhadOmidvar/Belly-Button-Biodiversity/blob/master/BellyButtonApp/static/css/main.css)
+Github ==> Got code snippets for my plots in Javascript (https://github.com/30-seconds/30-seconds-of-code/blob/master/README.md)
