@@ -56,7 +56,7 @@ function bubblePlot(data){
       size : markersize,
       color : markercolors,
     } 
-    text : textvalues
+   text : textvalues
   }
   let layout2 = {
     title : " Scatter Plot ",
